@@ -11,6 +11,7 @@ import (
 )
 
 var follow = false
+const version = "v0.1.0"
 
 func main() {
 	matchers := processArgs()
@@ -64,9 +65,13 @@ func main() {
 
 func processArgs() (matchers []string) {
 	for _, arg := range os.Args[1:] {
-		if arg == "--tail" || arg == "-t" {
+		switch arg {
+		case "--version", "-v":
+			fmt.Println("log-me", version)
+			os.Exit(0)
+		case "--tail", "-t":
 			follow = true
-		} else {
+		default:
 			matchers = append(matchers, massageMatcher(arg))
 		}
 	}
